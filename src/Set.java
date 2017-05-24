@@ -1,189 +1,78 @@
-import java.util.Arrays;
-import java.util.Scanner;
-
-public class Set {
+public class SetADT {
     public static void main(String args[]){
-        Scanner kb = new Scanner(System.in);
-        String userInput;
-        String userInput2;
-        int operation;
-        String[] set1;
-        String[] set2;
-        String[] finalSet;
-        boolean repeat = true;
+        System.out.println("Welcome to the SET machine.\n" +
+                "This program is self-automated and will demonstrate sets using ADT.");
 
-        System.out.println("Welcome to the SET machine.\nEnter a set separated by commas with no space inbetween.");
-        System.out.print("Enter a set: ");
-        userInput = kb.nextLine();
-        System.out.print("Enter a 2nd set: ");
-        userInput2 = kb.nextLine();
+        Integer[] set1 = {1,2,3,4};
+        Integer[] set2 = {2,3,4,5};
 
-        //create set1
-        set1 = createArray(userInput);
-        //print(set1);
-        set1 = checkDuplicate(set1);
-        //System.out.println("new set: ");
-        //print(set1);
+        Integer[] set3 = {2,5,7,10,14,26,29};
+        Integer[] set4 = {5,8,9,13,14,27,30};
 
-        //create set2
-        set2 = createArray(userInput2);
-        //print(set2);
-        set2 = checkDuplicate(set2);
-        //System.out.println("new set: ");
-        //print(set2);
+        Character[] set5 = {'a','b','c','d'};
+        Character[] set6 = {'d','c','z','x'};
 
-        do{
-           System.out.println("What would you like to do with your set? Union(1), Intersection(2), Difference(3), Exit(4)");
-           System.out.print("Enter now: ");
-           operation = kb.nextInt();
+        Character[] set7 = {'u','t','r','w','a','u'};
+        Character[] set8 = {'t','r','w','a','u'};
 
-           switch(operation) {
-               case 1:
-                   finalSet = union(set1, set2);
-                   System.out.print("Union: ");
-                   print(finalSet);
-                   break;
-               case 2:
-                   finalSet = intersection(set1, set2);
-                   System.out.print("Intersection: ");
-                   print(finalSet);
-                   break;
-               case 3: finalSet = difference(set1, set2);
-                   System.out.print("Difference: ");
-                   print(finalSet);
-                   break;
-               case 4:
-                   System.out.print("End Program");
-                   repeat = false;
-                   break;
-               default:
-                   System.out.print("Incorrect selection. End Program");
-                   repeat = false;
-                   break;
-           }
-        }while(repeat == true);
+        Double[] set9 = {1.0,2.0,3.0,4.0};
+        Double[] set10 = {1.1,2.0,3.5,4.9};
 
+        Double[] set11 = {45.9,32.9,2.0,54.6};
+        Double[] set12 = {78.2,32.9,123.0,54.6};
+
+        SetADTEngine<Integer> finalset1 = new SetADTEngine<Integer>(set1, set2, Integer[].class);
+        System.out.println("Operation on Integer");
+        System.out.print("Union: ");
+        finalset1.print(finalset1.getUnion());
+        System.out.print("Intersection: ");
+        finalset1.print(finalset1.getIntersection());
+        System.out.print("Difference: ");
+        finalset1.print(finalset1.getDifference());
+
+        SetADTEngine<Integer> finalset2 = new SetADTEngine<Integer>(set3, set4, Integer[].class);
+        System.out.println("\nOperation on Integer");
+        System.out.print("Union: ");
+        finalset2.print(finalset2.getUnion());
+        System.out.print("Intersection: ");
+        finalset2.print(finalset2.getIntersection());
+        System.out.print("Difference: ");
+        finalset2.print(finalset2.getDifference());
+
+        SetADTEngine<Character> finalset3 = new SetADTEngine<Character>(set5, set6, Character[].class);
+        System.out.println("\nOperation on Character");
+        System.out.print("Union: ");
+        finalset3.print(finalset3.getUnion());
+        System.out.print("Intersection: ");
+        finalset3.print(finalset3.getIntersection());
+        System.out.print("Difference: ");
+        finalset3.print(finalset3.getDifference());
+
+        SetADTEngine<Character> finalset4 = new SetADTEngine<Character>(set7, set8, Character[].class);
+        System.out.println("\nOperation on Character");
+        System.out.print("Union: ");
+        finalset4.print(finalset4.getUnion());
+        System.out.print("Intersection: ");
+        finalset4.print(finalset4.getIntersection());
+        System.out.print("Difference: ");
+        finalset4.print(finalset4.getDifference());
+
+        SetADTEngine<Double> finalset5 = new SetADTEngine<Double>(set9, set10, Double[].class);
+        System.out.println("\nOperation on Double");
+        System.out.print("Union: ");
+        finalset5.print(finalset5.getUnion());
+        System.out.print("Intersection: ");
+        finalset5.print(finalset5.getIntersection());
+        System.out.print("Difference: ");
+        finalset5.print(finalset5.getDifference());
+
+        SetADTEngine<Double> finalset6 = new SetADTEngine<Double>(set11, set12, Double[].class);
+        System.out.println("\nOperation on Double");
+        System.out.print("Union: ");
+        finalset6.print(finalset6.getUnion());
+        System.out.print("Intersection: ");
+        finalset6.print(finalset6.getIntersection());
+        System.out.print("Difference: ");
+        finalset6.print(finalset6.getDifference());
     }
-
-    private static String[] createArray(String userInput){
-        String[] input = userInput.split(",");
-        return input;
-    }
-
-    private static String[] checkDuplicate(String[] set){
-        boolean change = false;
-        int newLength = set.length;
-        int j = 0;
-
-        Arrays.sort(set);
-
-        //check for duplicate
-        for(int i =0; i < set.length-1; i++){
-            if(set[i].equals(set[i+1])) {
-                set[i] = "-1";
-                newLength--;
-                change = true;
-            }
-        }
-
-        if (change == false)
-            return set;
-
-        //System.out.println("duplicate set:");
-        //print(set);
-
-        String[] newSet = new String[newLength];
-        //reduce array
-        for(int i = 0; i < set.length; i++){
-            if(!set[i].equals("-1")) {
-                newSet[j] = set[i];
-                j++;
-            }
-        }
-        return newSet;
-    }
-
-    private static void print(String[] set){
-        System.out.println(Arrays.toString(set));
-    }
-
-     private static String[] union(String[] set1, String[] set2){
-        int finalLength = set1.length + set2.length;
-        String[] finalSet = new String[finalLength];
-
-        //fill array for set1; might optimize later
-        for(int i = 0; i < set1.length; i++){
-            finalSet[i] = set1[i];
-        }
-        //fill array for set2
-         for(int i = 0; i < set2.length; i++){
-             finalSet[set1.length + i] = set2[i];
-         }
-
-        finalSet = checkDuplicate(finalSet);
-
-        return finalSet;
-     }
-
-     private static String[] intersection(String[] set1, String[] set2){
-         int arrayLargest = 1;
-         int arrayLengthCounter = 0;
-         String container = "";
-
-         if(set1.length < set2.length)
-             arrayLargest = 2;
-
-         //determine finalSet length
-         if(arrayLargest == 2)
-            for(int i = 0; i < set2.length; i++){
-                for(int j = 0; j < set1.length; j++){
-                    if(set2[i].equals(set1[j])){
-                        arrayLengthCounter++;
-                        container += set2[i];
-                    }
-                }
-            }
-         else
-             for(int i = 0; i < set1.length; i++){
-                 for(int j = 0; j < set2.length; j++){
-                     if(set1[i].equals(set2[j])) {
-                         arrayLengthCounter++;
-                         container += set1[i];
-                     }
-                 }
-             }
-
-         //create finalSet
-         String[] finalSet = new String[arrayLengthCounter];
-         for(int i = 0; i < finalSet.length; i++) {
-            char temp = container.charAt(i);
-            finalSet[i] = Character.toString(temp);
-        }
-         return finalSet;
-     }
-
-     private static String[] difference(String[] set1, String[] set2) {
-         int finalSetLength = set1.length;
-         int w = 0;
-
-         //determine difference and length amount
-         for(int i =0; i < set1.length; i++)
-            for(int j = 0; j < set2.length; j++){
-                if(set1[i].equals(set2[j])) {
-                    set1[i] = "-1";
-                    finalSetLength--;
-                }
-            }
-
-         String[] finalSet = new String[finalSetLength];
-
-         //create finalSet
-         for(int i = 0; i < set1.length; i++){
-             if(!set1[i].equals("-1")) {
-                 finalSet[w] = set1[i];
-                 w++;
-             }
-         }
-        return finalSet;
-     }
 }
